@@ -28,7 +28,7 @@ android {
                 storeFile rootProject.file('release.keystore.jks')
                 storePassword System.getenv("ALIAS_PASS")
                 keyAlias System.getenv("ALIAS_NAME")
-                keyPassword System.getenv("KEYSTORE_PASS") 
+                keyPassword System.getenv("KEYSTORE_PASS")
             }
         }
         else {

@@ -7,6 +7,10 @@ before_cache:
 - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
+  - "$HOME/.m2"
+  - "$HOME/.gradle"
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
   - "$HOME/.android/build-cache"
@@ -26,14 +30,11 @@ android:
   - build-tools-${ANDROID_BUILD_TOOLS_VERSION}
   - extra
 script:
-- "./gradlew assembleRelease --stacktrace"
+  - "./gradlew assembleRelease --stacktrace"
 
 before_install:
-- openssl aes-256-cbc -K $encrypted_9b3174215596_key -iv $encrypted_9b3174215596_iv -in release.keystore.jks.enc -out release.keystore.jks -d
-
-before_deploy:
-- scripts/tag.sh
-
+  - openssl aes-256-cbc -K $encrypted_9b3174215596_key -iv $encrypted_9b3174215596_iv -in release.keystore.jks.enc -out release.keystore.jks -d
+  
 deploy:
   provider: releases
   on:
@@ -44,4 +45,7 @@ deploy:
   file_glob: true
   overwrite: true
   skip_cleanup: true
+
+after_success:
+  - scripts/tag.sh
   
