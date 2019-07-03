@@ -26,17 +26,17 @@ android {
         if (System.getenv("TRAVIS")) {
             release {
                 storeFile rootProject.file('release.keystore.jks')
-                storePassword System.getenv("KEYSTORE_PASS")
+                storePassword System.getenv("ALIAS_PASS")
                 keyAlias System.getenv("ALIAS_NAME")
-                keyPassword System.getenv("ALIAS_PASS")
+                keyPassword System.getenv("KEYSTORE_PASS") 
             }
         }
         else {
             release {
                 keyAlias keystoreProperties['releaseKeyAlias']
-                keyPassword keystoreProperties['releaseStorePassword']
+                keyPassword keystoreProperties['releaseKeyPassword']
                 storeFile file(rootDir.getCanonicalPath() + '/' + keystoreProperties['releaseKeyStore'])
-                storePassword keystoreProperties['releaseKeyPassword']
+                storePassword keystoreProperties['releaseStorePassword']
             }
         }
     }
