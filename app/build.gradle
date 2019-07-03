@@ -34,9 +34,9 @@ android {
         else {
             release {
                 keyAlias keystoreProperties['releaseKeyAlias']
-                keyPassword keystoreProperties['releaseKeyPassword']
+                keyPassword keystoreProperties['releaseStorePassword']
                 storeFile file(rootDir.getCanonicalPath() + '/' + keystoreProperties['releaseKeyStore'])
-                storePassword keystoreProperties['releaseStorePassword']
+                storePassword keystoreProperties['releaseKeyPassword']
             }
         }
     }

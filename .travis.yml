@@ -26,7 +26,7 @@ android:
   - build-tools-${ANDROID_BUILD_TOOLS_VERSION}
   - extra
 script:
-- "./gradlew assembleRelease"
+- "./gradlew assembleRelease --stacktrace"
 
 before_install:
 - openssl aes-256-cbc -K $encrypted_9b3174215596_key -iv $encrypted_9b3174215596_iv -in release.keystore.jks.enc -out release.keystore.jks -d
