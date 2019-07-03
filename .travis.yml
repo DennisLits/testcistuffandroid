@@ -28,14 +28,10 @@ android:
 script:
 - "./gradlew assembleRelease"
 
+before_install:
+- openssl aes-256-cbc -K $encrypted_9b3174215596_key -iv $encrypted_9b3174215596_iv -in release.keystore.jks.enc -out release.keystore.jks -d
 
 before_deploy:
-- openssl aes-256-cbc -K $encrypted_9b3174215596_key -iv $encrypted_9b3174215596_iv -in release.keystore.jks.enc -out release.keystore.jks -d
-- cd app/build/outputs/apk/release
-- jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ${TRAVIS_BUILD_DIR}/release.keystore.jks -storepass $storepass -keypass $keypass app-release-unsigned.apk kmptestkeyAl
-- jarsigner -verify app-release-unsigned.apk
-- "${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/zipalign -v 4 app-release-unsigned.apk TravisAndroid.apk"
-- cd -
 - scripts/tag.sh
 
 deploy:
@@ -44,7 +40,8 @@ deploy:
     branch: master
   api_key:
     secure: "YXzDh3KNolH0KuGJ4CTdwFidso7uI16ZpEEYaSYIPJp0+jvCXd2/1BL/ouyvUURsly4g8n3CCnRHmtGKO0x9VboX5iHUeCA8zziPUs8WdLJGx63TuwB1yGsYozX4f7ojlfbYzl1B6eK+U5RtEzFO6ro39AGKvKSoaVV1uMLJL0/Qk5zuDNHs3CTkBPTkj+BwrhTJzrDU/RtB/sWof5dAR0xAgZUx6xCkOIoWZK/SQ5sJNe18s62yMxk9rXNH5Bz8sAI4vs8CWTK6cWvcCLhHAPogmraiJ8bMjg5OrG5dV/FH9MafIsJLGLpna4Hn43MQC2qec70krNlVtdOvmhvi5lKuFiNT2TPa2o/3IlqfWYzlLAWckVdnjSQapXbVqyNdtTMJKO6gUTBy7XW9h+DhMMHm0So0jp5L58qJVzHPSWLxvUmYc99jErfz77fif7iBTcxt0mJlyMhqqLro0vIubFH/pmxe2bzKQuXmn1JO3l1e7hk9PqPd2gBc1SifCzwit15X09TjKUJsclLqrHjv6Tt6tgcAI1JPCpV0+/+VqJDwMKanEDWQEoOCFTEVB/RvtxbZ9LDOscLQrx35lx55kPeel2LiEESMkzzvhc6g6+8LkZ6whPwBDJCyHGrZ1eBz7whJcBwI3VKO6RoPt/w71JNrmYJmKHYSZri09xql7IM="
-  file: "app/build/outputs/apk/release/TravisAndroid.apk"
+  file: app/build/outputs/apk/release/*
+  file_glob: true
   overwrite: true
   skip_cleanup: true
   
