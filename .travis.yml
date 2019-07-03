@@ -26,7 +26,7 @@ android:
   - build-tools-${ANDROID_BUILD_TOOLS_VERSION}
   - extra
 script:
-- "./gradlew buildRelease"
+- "./gradlew assembleRelease"
 
 
 before_deploy:
